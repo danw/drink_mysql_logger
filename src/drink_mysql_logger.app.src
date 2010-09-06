@@ -1,0 +1,12 @@
+{application, drink_mysql_logger,
+ [{description, "Drink Logger using MySQL"},
+  {vsn, "1.0"},
+  {modules, [drink_mysql_logger_app,
+             drink_mysql_logger_sup,
+             drink_mysql_logger,
+             drink_mysql_log]},
+  {registered,[]},
+  {applications, [kernel, stdlib, sasl, drink_log, drink]},
+  {mod, {drink_mysql_logger_app, []}},
+  {start_phases, []}
+]}.
