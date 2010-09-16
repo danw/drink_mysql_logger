@@ -49,7 +49,7 @@ initialize() ->
 get_logs(UserRef, Index, Count) when is_reference(UserRef), is_integer(Index), is_integer(Count) ->
     case {user_auth:can_admin(UserRef), user_auth:user_info(UserRef)} of
         {false, {ok, UserInfo = #user{}}} ->
-            case catch mysql:execute(drink_log, get_logs_user, [UserInfo#user.username, Index, Count], 30) of
+            case catch mysql:execute(drink_log, get_logs_user, [UserInfo#user.username, Index, Count], undefined) of
                 {error, _MySqlRes} ->
                     {error, mysql};
                 {data, MySqlRes} ->
@@ -62,7 +62,7 @@ get_logs(UserRef, Index, Count) when is_reference(UserRef), is_integer(Index), i
     end.
 
 get_logs(Index, Count) when is_integer(Index), is_integer(Count) ->
-    case catch mysql:execute(drink_log, get_logs, [Index, Count], 30) of
+    case catch mysql:execute(drink_log, get_logs, [Index, Count], undefined) of
         {error, _MySqlRes} ->
             {error, mysql};
         {data, MySqlRes} ->
@@ -71,7 +71,7 @@ get_logs(Index, Count) when is_integer(Index), is_integer(Count) ->
 
 get_temps(Since, Seconds) when is_tuple(Since), is_integer(Seconds) ->
     Until = calendar:gregorian_seconds_to_datetime(Seconds + calendar:datetime_to_gregorian_seconds(Since)),
-    case catch mysql:execute(drink_log, get_temps, [Since, Until], 30) of
+    case catch mysql:execute(drink_log, get_temps, [Since, Until], undefined) of
         {error, _MySqlRes} ->
             {error, mysql};
         {data, MySqlRes} ->
