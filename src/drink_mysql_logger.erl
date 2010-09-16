@@ -70,7 +70,7 @@ log_drop(Drop) ->
                                 Drop#drop_log.slot,
                                 Drop#drop_log.username,
                                 Drop#drop_log.time,
-                                Status], 30) of
+                                Status], undefined) of
         {updated, _MySqlRes} ->
             ok;
         Reason ->
@@ -86,7 +86,7 @@ log_money(Money) ->
                                 Money#money_log.admin,
                                 Money#money_log.amount,
                                 Money#money_log.direction,
-                                Money#money_log.reason], 30) of
+                                Money#money_log.reason], undefined) of
         {updated, _MySqlRes} ->
             ok;
         Reason ->
@@ -98,7 +98,7 @@ log_temperature(Temperature) ->
     case catch mysql:execute(drink_log, log_temperature, [
                                 Temperature#temperature.machine,
                                 Temperature#temperature.time,
-                                Temperature#temperature.temperature], 30) of
+                                Temperature#temperature.temperature], undefined) of
         {updated, _MySqlRes} ->
             ok;
         Reason ->
